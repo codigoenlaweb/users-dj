@@ -1,8 +1,15 @@
+import environ
 from pathlib import Path
+
+
+# env
+env = environ.Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Take environment variables from .env file
+environ.Env.read_env(BASE_DIR.parent / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -23,6 +30,7 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
     'apps.users',
+    'apps.home',
 ]
 
 THIRD_PARTY_APPS = []
@@ -44,7 +52,7 @@ ROOT_URLCONF = 'users.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR.parent / "template"],
+        'DIRS': [BASE_DIR.parent / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,7 +85,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Model User
 AUTH_USER_MODEL = 'users.User'
+
+# Redirect route loged
+LOGIN_REDIRECT_URL = 'myapp:myapp'
+# Redirect route logout
+LOGOUT_REDIRECT_URL = 'home:home'
+# Redirect route required login
+LOGIN_URL = 'home:login' 
+ 
  
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
